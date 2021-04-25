@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 // import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
@@ -70,7 +71,7 @@ class _UpdateStatusScreenState extends State<UpdateStatusScreen> {
       ),
       body: Center(
         child: userData != null
-            ? Column(
+            ? userData.length!=0?Column(
                 children: [
                   Expanded(
                       child: ListView.builder(
@@ -126,6 +127,10 @@ class _UpdateStatusScreenState extends State<UpdateStatusScreen> {
                                     ),
                                     Row(
                                       children: [
+                                        Icon(Icons.location_searching),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
                                         Text(userData[index]['district']),
                                       ],
                                     ),
@@ -139,6 +144,15 @@ class _UpdateStatusScreenState extends State<UpdateStatusScreen> {
                                       onTap:() async{
                                         await updateUserStatus(userData[index]['mobileNumber'], true);
                                         if(resCode1=="200"){
+                                          Fluttertoast.showToast(
+                                              msg: "User status updated successfully",
+                                              toastLength: Toast.LENGTH_SHORT,
+                                              gravity: ToastGravity.CENTER,
+                                              timeInSecForIosWeb: 1,
+                                              backgroundColor: Colors.red,
+                                              textColor: Colors.white,
+                                              fontSize: 16.0
+                                          );
                                           await getUser(false);
                                         }
                                         print('hey');
@@ -168,7 +182,7 @@ class _UpdateStatusScreenState extends State<UpdateStatusScreen> {
                     },
                   ))
                 ],
-              )
+              ):Center(child: Text('No User Found to Change Status'),)
             : CircularProgressIndicator(),
       ),
     );

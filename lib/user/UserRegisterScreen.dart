@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:capstone_jobkro/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:string_validator/string_validator.dart';
 import 'package:http/http.dart' as http;
 class RegisterUser extends StatefulWidget {
@@ -65,6 +66,7 @@ class _RegisterUserState extends State<RegisterUser> {
                 decoration: InputDecoration(
                   hintText: 'Mobile'
                 ),
+                keyboardType: TextInputType.number,
               ),
               SizedBox(height: 15,),
               DropdownButton(
@@ -106,15 +108,51 @@ class _RegisterUserState extends State<RegisterUser> {
                   String name=n.text.trim();
                   if(mobile==null || mobile.length!=10 || !isNumeric(mobile) ){
                     //todo show error--invalid mobile number
+                    Fluttertoast.showToast(
+                        msg: "Invalid Mobile",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.CENTER,
+                        timeInSecForIosWeb: 1,
+                        backgroundColor: Colors.red,
+                        textColor: Colors.white,
+                        fontSize: 16.0
+                    );
                   }
                   else if(name==null || name.isEmpty){
                     //todo error -- invalid name
-                  }else if (hintForDistrict=='' || hintForProfession==''){
+                    Fluttertoast.showToast(
+                        msg: "Invalid Name",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.CENTER,
+                        timeInSecForIosWeb: 1,
+                        backgroundColor: Colors.red,
+                        textColor: Colors.white,
+                        fontSize: 16.0
+                    );
+                  }else if (hintForDistrict=='Choose Location' || hintForProfession=='Choose Profession'){
                     //todo show error - invalid profession or location
+                    Fluttertoast.showToast(
+                        msg: "Invalid Input",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.CENTER,
+                        timeInSecForIosWeb: 1,
+                        backgroundColor: Colors.red,
+                        textColor: Colors.white,
+                        fontSize: 16.0
+                    );
                   }else{
                     //call create user api
                     await RegisterUser(name, mobile, hintForProfession, hintForDistrict);
                     if(resCode=="200"){
+                      Fluttertoast.showToast(
+                          msg: "User Registered",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.CENTER,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Colors.red,
+                          textColor: Colors.white,
+                          fontSize: 16.0
+                      );
                       print('registered');
                       n.clear();
                       mn.clear();
@@ -122,9 +160,27 @@ class _RegisterUserState extends State<RegisterUser> {
                     }else if(resCode=="202"){
                       //todo already resitered
                       print('already registered');
+                      Fluttertoast.showToast(
+                          msg: "already registered with this mobile number",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.CENTER,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Colors.red,
+                          textColor: Colors.white,
+                          fontSize: 16.0
+                      );
                     }else{
                       //todo error
                       print('failed registered');
+                      Fluttertoast.showToast(
+                          msg: "failed registered",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.CENTER,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Colors.red,
+                          textColor: Colors.white,
+                          fontSize: 16.0
+                      );
                     }
                   }
                 },
