@@ -9,7 +9,7 @@ void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     title: 'JOBKRO',
-    home: HomeUser(),
-    // home: HomeAdmin(),
+    // home: HomeUser(),
+    home: HomeAdmin(),
   ));
 }

@@ -82,7 +82,7 @@ class _GetUserScreenState extends State<GetUserScreen> {
         title: Text('Users'),
         backgroundColor: Colors.orange,
         actions: [
-          InkWell(
+          widget.isUser!=null?InkWell(
             onTap: () {
               if (filterFlag) {
                 setState(() {
@@ -101,7 +101,7 @@ class _GetUserScreenState extends State<GetUserScreen> {
                 color: Colors.white,
               ),
             ),
-          )
+          ):SizedBox()
         ],
       ),
       body: Center(
@@ -362,7 +362,7 @@ class _GetUserScreenState extends State<GetUserScreen> {
                                         onPressed: () {
                                           Navigator.pop(context);
                                           //todo make the code for calling a person
-                                          _makingPhoneCall('tel:'+userData[index]['mobileNumber']);
+                                          _makingPhoneCall('tel:'+userData[index]['mobileNumber'].toString());
                                         },
                                         width: 120,
                                       )
